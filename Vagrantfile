@@ -38,6 +38,16 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  config.vm.define :production do |production|
+    production.vm.network :forwarded_port, guest: 80, host: 11000
+    production.vm.network "private_network", ip: "192.168.42.40"
+
+    production.vm.provision :chef_zero, install: false  do |chef|
+      chef.add_recipe "blog::default"
+      chef.add_recipe "blog::deploy"
+    end
+  end
+
   if Vagrant.has_plugin?("vagrant-triggers")
     config.trigger.before [:up, :reload], stdout: true do
       %w(development ci testing).each do |environment|

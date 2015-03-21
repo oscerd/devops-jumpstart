@@ -9,7 +9,7 @@ jenkins_plugin 'build-pipeline-plugin' do
   notifies :restart, 'service[jenkins]'
 end
 
-%w(commit acceptance).each do |stage_name|
+%w(commit acceptance production).each do |stage_name|
   cookbook_file "/tmp/#{stage_name}-stage-config.xml" do
     source "#{stage_name}-stage-config.xml"
   end

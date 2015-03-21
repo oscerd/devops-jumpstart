@@ -28,9 +28,19 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  config.vm.define :testing do |testing|
+    testing.vm.network :forwarded_port, guest: 80, host: 10000
+    testing.vm.network "private_network", ip: "192.168.42.30"
+
+    testing.vm.provision :chef_zero, install: false  do |chef|
+      chef.add_recipe "blog::default"
+      chef.add_recipe "blog::deploy"
+    end
+  end
+
   if Vagrant.has_plugin?("vagrant-triggers")
     config.trigger.before [:up, :reload], stdout: true do
-      %w(development ci).each do |environment|
+      %w(development ci testing).each do |environment|
         `rm .vagrant/machines/#{environment}/virtualbox/synced_folders >> /dev/null 2>&1`
       end
     end

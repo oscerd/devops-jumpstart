@@ -10,6 +10,9 @@ gem 'rack-flash3'
 gem 'unicorn', require: false
 gem 'rspec'
 gem 'cucumber', require: false
+gem 'capistrano', require: false
+gem 'capistrano-scm-copy', require: false
+gem 'capistrano-bundler', require: false
 
 group :development, :test do
   gem 'rack-test'

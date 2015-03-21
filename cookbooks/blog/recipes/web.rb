@@ -14,5 +14,6 @@ link '/etc/nginx/sites-enabled/blog.com' do
 end
 
 service 'nginx' do
-  action [:enable, :start]
+  action [:enable, :restart]
 end
+

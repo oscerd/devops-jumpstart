@@ -9,6 +9,14 @@ jenkins_plugin 'build-pipeline-plugin' do
   notifies :restart, 'service[jenkins]'
 end
 
+cookbook_file "/tmp/commit-stage-config.xml" do
+  source "commit-stage-config.xml"
+end
+
+jenkins_job "Blog - Commit" do
+  config "/tmp/commit-stage-config.xml"
+end
+
 group 'vagrant' do
   action :modify
   members 'jenkins'
